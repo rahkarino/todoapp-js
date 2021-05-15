@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index | Todo App by Javascript Vanilla</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-8">
+          <form class="row align-items-center mb-3">
+            <div class="col-auto">
+              <div class="btn-group">
+                <button id="table-btn" class="btn btn-info active"><img src="images/table.svg"></a>
+                <button id="card-btn" class="btn btn-info"><img src="images/grid-3x2-gap.svg"></a>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="input-group">
+                <div class="input-group-text"><img src="images/search.svg"></div>
+                <input type="text" class="form-control" id="search-task" placeholder="جستجو...">
+              </div>
+            </div>
+            <div class="col-auto">
+              <select class="form-select" id="sort-by">
+                <option value="byWhat">مرتب سازی بر اساس...</option>
+                <option value="byCreated">تاریخ درج</option>
+                <option value="byEdited">تاریخ ویرایش</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="done-tasks">
+                <label class="form-check-label" for="done-tasks">
+                    انجام نشده
+                </label>
+              </div>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-secondary" type="button" id="btn-reset">
+                <img src="images/clipboard-plus.svg" alt="">
+                <span>حذف فیلترها</span>
+              </button>
+            </div>
+           
+           
+          </form>
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              id="task-title"
+              class="form-control"
+              placeholder="نام تسک را وارد کنید"
+              data-bs-toggle="tooltip" 
+              data-bs-placement="top" 
+              title="نام تسک را وارد کنید"
+            />
+            <select class="" id="task-category" data-bs-toggle="tooltip" data-bs-placement="top" title="دسته بندی را انتخاب کنید">
+              <option class="" value="notset">دسته بندی</option>
+              <option class="" value="personal">شخصی</option>
+              <option class="" value="nonpersonal">غیر شخصی</option>
+            </select>  
+           
+            <button class="btn btn-info" type="button" id="btn-add">
+              <img src="images/clipboard-plus.svg" alt="">
+              <span>افزودن</span>
+            </button>
+           
+            <button class="btn btn-danger" type="button" id="btn-remove-all">
+              <img src="images/trash.svg" alt="">
+              <span>حذف تسک ها</span>
+            </button>
+          </div>
+        
+          <table id="table" class="table table-default table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>نام تسک</th>
+                <th>دسته بندی</th>
+                <th>انجام شده؟</th>
+                <th>تاریخ درج</th>
+                <th>تاریخ ویرایش</th>
+                <th>عملیات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="no-task">
+                <td colspan="6" class="text-center bg-light"><span>تسکی موجود نیست</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Modal -->
+          <div class="modal fade" id="task-remove" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body remove-body">
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                  <button type="button" class="btn btn-danger" id="btn-remove" data-bs-dismiss="modal">بله! حذف کن</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="task-edit" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body edit-body">
+                  <label>عنوان تسک</label>
+                    <input
+                    type="text"
+                    id="task-title-edit"
+                    class="form-control"
+                  />
+                  <label>دسته بندی تسک</label>
+                  <select class="" id="task-category-edit">
+                    <option class="" value="personal">شخصی</option>
+                    <option class="" value="nonpersonal">غیر شخصی</option>
+                  </select><br/>
+                  <label>
+                    انجام شده؟
+                    <input type="checkbox" id="task-done-edit">
+                  </label><br/>
+                  <label>تاریخ آخرین ویرایش: </label><span id="task-edit-date"></span>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                  <button type="button" class="btn btn-primary" id="btn-edit" data-bs-dismiss="modal">ویرایش</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="card" class="row row-cols-1 row-cols-md-3 g-2 d-none">
+            <div class="col">
+              <div class="card h-100">
+                <div class="card-header">#1</div>
+                <div class="card-body">
+                  <h5 class="card-title">عنوان تسک</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><img src="images/bookmark-x.svg" alt="unchecked"><small class="text-muted"><b>وضعیت:</b> انجام نشده</small></li>
+                  <li class="list-group-item"><img src="images/card-list.svg" alt="unchecked"><small class="text-muted"><b>دسته بندی:</b> شخصی</small></li>
+                  <li class="list-group-item"><img src="images/calendar2-plus.svg" alt="unchecked"><small class="text-muted"><b>زمان درج:</b> 15 اردیبهشت 1400</small></li>
+                  <li class="list-group-item"><img src="images/calendar-check.svg" alt="unchecked"><small class="text-muted"><b>زمان ویرایش:</b> 20 دقیقه قبل</small></li>
+                </ul>
+                <div class="card-footer">
+                  <a href="#" class="btn btn-sm"><img src="images/pencil.svg"> ویرایش</a>
+                  <a href="#" class="btn btn-sm"><img src="images/trash.svg"> حذف</a>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100">
+                <div class="card-header">#2</div>
+                <div class="card-body">
+                  <h5 class="card-title">عنوان تسک</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><img src="images/bookmark-x.svg" alt="unchecked"><small class="text-muted"><b>وضعیت:</b> انجام نشده</small></li>
+                  <li class="list-group-item"><img src="images/card-list.svg" alt="unchecked"><small class="text-muted"><b>دسته بندی:</b> شخصی</small></li>
+                  <li class="list-group-item"><img src="images/calendar2-plus.svg" alt="unchecked"><small class="text-muted"><b>زمان درج:</b> 15 اردیبهشت 1400</small></li>
+                  <li class="list-group-item"><img src="images/calendar-check.svg" alt="unchecked"><small class="text-muted"><b>زمان ویرایش:</b> 20 دقیقه قبل</small></li>
+                </ul>
+                <div class="card-footer">
+                  <a href="#" class="btn btn-sm"><img src="images/pencil.svg"> ویرایش</a>
+                  <a href="#" class="btn btn-sm"><img src="images/trash.svg"> حذف</a>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100">
+                <div class="card-header">#3</div>
+                <div class="card-body">
+                  <h5 class="card-title">عنوان تسک</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><img src="images/bookmark-x.svg" alt="unchecked"><small class="text-muted"><b>وضعیت:</b> انجام نشده</small></li>
+                  <li class="list-group-item"><img src="images/card-list.svg" alt="unchecked"><small class="text-muted"><b>دسته بندی:</b> شخصی</small></li>
+                  <li class="list-group-item"><img src="images/calendar2-plus.svg" alt="unchecked"><small class="text-muted"><b>زمان درج:</b> 15 اردیبهشت 1400</small></li>
+                  <li class="list-group-item"><img src="images/calendar-check.svg" alt="unchecked"><small class="text-muted"><b>زمان ویرایش:</b> 20 دقیقه قبل</small></li>
+                </ul>
+                <div class="card-footer">
+                  <a href="#" class="btn btn-sm"><img src="images/pencil.svg"> ویرایش</a>
+                  <a href="#" class="btn btn-sm"><img src="images/trash.svg"> حذف</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/vendor/popper.min.js"></script>
+    <script src="js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="js/vendor/moment.js"></script>
+    <script src="js/vendor/jalali-moment.js"></script>
+    <script src="js/vendor/uuid.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+* {
+    border-radius: 0  !important;
+    text-align: right;
+}
+body {
+  direction: rtl;
+  
+  padding-top: 100px;
+  .row {
+    // height: 100vh;
+  }
+}
+.card-header {
+    text-align: center;
+    font-weight: bold;
+}
+
+.list-group {
+    padding-right: 0;
+    img {
+        margin-left: 10px;
+    }
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table {
+    img {
+        width: 20px;
+    }
+    thead {
+        white-space: nowrap;
+    }
+}
+
+select {
+    width: 150px;
+    border: 1px solid #ccc;
+}

@@ -1,0 +1,45 @@
+* {
+  border-radius: 0  !important;
+  text-align: right;
+}
+
+body {
+  direction: rtl;
+  padding-top: 100px;
+}
+
+.card-header {
+  text-align: center;
+  font-weight: bold;
+}
+
+.list-group {
+  padding-right: 0;
+}
+
+.list-group img {
+  margin-left: 10px;
+}
+
+.card-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.table img {
+  width: 20px;
+}
+
+.table thead {
+  white-space: nowrap;
+}
+
+select {
+  width: 150px;
+  border: 1px solid #ccc;
+}
+/*# sourceMappingURL=main.css.map */
